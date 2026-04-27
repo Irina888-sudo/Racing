@@ -1,0 +1,15 @@
+D:\Racing\bin\Debug\net10.0-windows\Racing.exe
+D:\Racing\bin\Debug\net10.0-windows\Racing.deps.json
+D:\Racing\bin\Debug\net10.0-windows\Racing.runtimeconfig.json
+D:\Racing\bin\Debug\net10.0-windows\Racing.dll
+D:\Racing\bin\Debug\net10.0-windows\Racing.pdb
+D:\Racing\obj\Debug\net10.0-windows\Racing.GeneratedMSBuildEditorConfig.editorconfig
+D:\Racing\obj\Debug\net10.0-windows\Racing.AssemblyInfoInputs.cache
+D:\Racing\obj\Debug\net10.0-windows\Racing.AssemblyInfo.cs
+D:\Racing\obj\Debug\net10.0-windows\Racing.csproj.CoreCompileInputs.cache
+D:\Racing\obj\Debug\net10.0-windows\Racing.dll
+D:\Racing\obj\Debug\net10.0-windows\refint\Racing.dll
+D:\Racing\obj\Debug\net10.0-windows\Racing.pdb
+D:\Racing\obj\Debug\net10.0-windows\Racing.genruntimeconfig.cache
+D:\Racing\obj\Debug\net10.0-windows\ref\Racing.dll
+D:\Racing\bin\Debug\net10.0-windows\data\cars.txt

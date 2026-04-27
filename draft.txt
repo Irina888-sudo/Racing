@@ -1,0 +1,39 @@
+Ton programme = 3 blocs
+Données (fichier)
+Logique (C#)
+Interface (WinForms)
+
+
+Analogie 1 (restaurant) :
+fichier = ingrédients
+code = cuisinier
+interface = serveur
+
+
+[ FICHIER TXT ]
+      ↓
+[ LECTURE C# ]
+      ↓
+[ LISTE EN MÉMOIRE ]
+      ↓
+[ WINFORMS (INTERFACE) ]
+      ↓
+[ ACTION (clic utilisateur) ]
+
+
+
+
+Data (txt)
+   ↓
+Service (lecture + transformation)
+   ↓
+Model (voiture en mémoire)
+   ↓
+Form (affichage)
+   ↓
+Utilisateur clique → action
+
+
+MainForm.cs : Comportement
+MainForm.Designer.cs : Apparence Le plan de la salle (tables, chaises, disposition)
+Program.cs : Démarrage Le gérant qui ouvre la porte le matin

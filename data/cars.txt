@@ -1,0 +1,3 @@
+Mini Cooper|225|15
+BMW M3|250|20
+Audi R8|330|25
