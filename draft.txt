@@ -36,4 +36,16 @@ Utilisateur clique → action
 
 MainForm.cs : Comportement
 MainForm.Designer.cs : Apparence Le plan de la salle (tables, chaises, disposition)
-Program.cs : Démarrage Le gérant qui ouvre la porte le matin
+Program.cs : Démarrage Le gérant qui ouvre la porte le matin.
+
+
+
+
+Quelque modification sur l'affichage
+- Quand la voiture arrive jusquau bout le chrono stop et la voiture se met a la place initial avec vitesse 0
+- On utilise les chiffre de configuration , Vmax et Capacite d'accelleration, voila le processus la fenetre simulation appareil , je clique sur le bouton GO {a ajouter}
+      -La voiture demarre de selon la capacite de son acceleration km/h/s. C'est a dire si je clique maintenir pendant 2 s la  capacite de son acceleration est fois 2
+      - Quand j'arrete le maintenir la vitesse s'arrete sur la vitesse derniere, cest a dire la voiture roule sur la vitesse derniere
+      - Et quand je clique maintenir et l'acceleration augmente toujours et atteinds la vitesse max, la capacite d'acceleration ne pet plus augmenter
+
+Si vous avez toujours des questions vous pouvez me les poser, vous etes libres sur toute sorte de question

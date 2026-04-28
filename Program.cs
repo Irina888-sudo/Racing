@@ -16,7 +16,7 @@ namespace Racing
             Application.SetCompatibleTextRenderingDefault(false);
  
             // Le chemin du fichier est construit dynamiquement depuis le dossier de l'exe
-            string filePath = Path.Combine(Application.StartupPath, "Data", "voitures.txt");
+            string filePath = Path.Combine(Application.StartupPath, "Data", "cars.txt");
  
             CarServices carService = new CarServices(filePath);
  
