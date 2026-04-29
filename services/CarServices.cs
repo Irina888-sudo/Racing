@@ -46,7 +46,7 @@ namespace Racing.services
  
         public Car GetCarByNom(string nom)
         {
-            return _cars.Find(c => c.Name == nom);
+            return _cars.FirstOrDefault(c => c.Name.Equals(nom, StringComparison.OrdinalIgnoreCase));
         }
     }
 }

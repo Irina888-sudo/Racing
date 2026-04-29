@@ -13,6 +13,8 @@ namespace Racing.forms
         private float _carX        = 20;
         private bool _spaceHeld    = false;
         private bool _raceStarted  = false;
+        private int _tickCount     = 0;
+        private DateTime _spaceHoldStartTime;
 
         public SimulationForm(Car car)
         {
@@ -44,25 +46,36 @@ namespace Racing.forms
         {
             if (e.KeyCode == Keys.Space && !_simService.IsFinished)
             {
-                _spaceHeld         = true;
-                _raceStarted       = true;
+                if (!_spaceHeld)  // Seulement au premier appui
+                {
+                    _spaceHeld = true;
+                    _spaceHoldStartTime = DateTime.Now;
+                    _raceStarted = true;
+                }
                 e.SuppressKeyPress = true;
             }
         }
 
         private void OnKeyUp(object? sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Space)
+            if (e.KeyCode == Keys.Space && _spaceHeld)
+            {
+                // Calcule le temps maintenu et applique l'accélération
+                TimeSpan holdDuration = DateTime.Now - _spaceHoldStartTime;
+                double secondsHeld = holdDuration.TotalSeconds;
+
+                _simService.ApplyAcceleration(secondsHeld);
                 _spaceHeld = false;
+            }
         }
 
         private void OnTick(object? sender, EventArgs e)
         {
             if (!_raceStarted) return;
 
-            _simService.Tick(_spaceHeld);
+            _simService.Tick();
 
-            _carX += (float)(_simService.CurrentSpeed / 100f);
+            _carX += (float)(_simService.CurrentSpeed / 5f);
 
             if (_carX >= pnlRoute.Width - 60)
             {
@@ -84,6 +97,7 @@ namespace Racing.forms
             _carX        = 20;
             _spaceHeld   = false;
             _raceStarted = false;
+            _tickCount   = 0;
 
             lblSpeedValue.Text = "0 km/h";
             lblChrono.Text     = "00:00:00";

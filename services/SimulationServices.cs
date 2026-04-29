@@ -6,6 +6,7 @@ namespace Racing.services
     public class SimulationService
     {
         private readonly Car _car;
+        private int _tickCount = 0;
 
         public double CurrentSpeed  { get; private set; } = 0;
         public TimeSpan ElapsedTime { get; private set; } = TimeSpan.Zero;
@@ -21,48 +22,47 @@ namespace Racing.services
             _car = car;
         }
 
-        /// <summary>
-        /// Appelée chaque tick (50ms).
-        /// isAccelerating = true si espace maintenu.
-        /// </summary>
-        public void Tick(bool isAccelerating)
+        public void Tick()
         {
             if (IsFinished) return;
+    
+            _tickCount++;
 
-            // Augmente la vitesse uniquement si espace maintenu ET pas encore à VitesseMax
-            if (isAccelerating && CurrentSpeed < _car.MaxSpeed)
-            {
-                // Acceleration est en km/h/s → on divise par 20 car tick = 50ms (1s/20)
-                CurrentSpeed += _car.Acceleration / 20.0;
-
-                if (CurrentSpeed > _car.MaxSpeed)
-                    CurrentSpeed = _car.MaxSpeed;
-            }
-
-            // Démarre le chrono dès que la vitesse > 0
+            // Chrono démarre dès vitesse > 0
             if (CurrentSpeed > 0 && !_chronoStarted)
             {
                 _chronoStarted = true;
                 _chronoStart   = DateTime.Now;
             }
 
-            // Met à jour le chrono
             if (_chronoStarted)
                 ElapsedTime = DateTime.Now - _chronoStart;
         }
 
         /// <summary>
-        /// Appelée quand la voiture atteint 800px → stop chrono, reset vitesse.
+        /// Applique une augmentation de vitesse basée sur la durée du maintien du spacebar
         /// </summary>
+        public void ApplyAcceleration(double secondsHeld)
+        {
+            if (IsFinished) return;
+
+            // Augmente la vitesse de : accélération × secondesHeld
+            double speedIncrease = _car.Acceleration * secondsHeld;
+            CurrentSpeed += speedIncrease;
+
+            // Plafonne à la vitesse maximale
+            if (CurrentSpeed > _car.MaxSpeed)
+                CurrentSpeed = _car.MaxSpeed;
+        }
+
+       
+
         public void Finish()
         {
             IsFinished   = true;
             CurrentSpeed = 0;
         }
 
-        /// <summary>
-        /// Remet tout à zéro pour une nouvelle course.
-        /// </summary>
         public void Reset()
         {
             CurrentSpeed   = 0;
