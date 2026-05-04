@@ -44,3 +44,18 @@ Afficher une confirmation
 
 
 #Si vous avez des questions vus pouvez me les posez
+
+
+But : le chrono doit etre independant de la course c'est a dire il devient manuel
+On va ajouter des boutons : start, stop, reset sous le chrono
+Et le chrono commence par -5 pas 0. 
+
+#mais avant tout ca si vous avez des questions vous pouvez me les pose
+
+
+C'est un projet et je veux juste debugger quelque chose .
+je veux enregistrer la premiere coup de "espace" de la voiture c'est a dire la premiere acceleration
+Je veux enregistrer a quelle seconde la voiture a ete accélèrer pour la premiere fois
+Donc le chrono doit marcher quand on clique sur start meme si la voiture ne demarre pas encore 
+mais avant tout ca si vous avez des questions vous pouvez me les pose, u si vous avez besoin de fichiers vous
+ pouvezme demander

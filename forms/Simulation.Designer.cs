@@ -19,7 +19,11 @@ namespace Racing.forms
             this.lblChronoTitle = new System.Windows.Forms.Label();
             this.lblSpeedValue  = new System.Windows.Forms.Label();
             this.lblCarName     = new System.Windows.Forms.Label();
+            this.lblFirstAccel  = new System.Windows.Forms.Label();  // 🎯 Nouveau label
             this.btnGo          = new System.Windows.Forms.Button();
+            this.btnChronoStart = new System.Windows.Forms.Button();
+            this.btnChronoStop  = new System.Windows.Forms.Button();
+            this.btnChronoRestart = new System.Windows.Forms.Button();
             this.SuspendLayout();
 
             // ── Fond général ───────────────────────────────────────────────────
@@ -71,9 +75,19 @@ namespace Racing.forms
             this.lblChrono.Location  = new System.Drawing.Point(480, 260);
             this.lblChrono.Text      = "00:00:00";
 
+            // ── 1ère accélération ──────────────────────────────────────────────
+            this.lblFirstAccel.AutoSize  = false;
+            this.lblFirstAccel.Size      = new System.Drawing.Size(240, 20);
+            this.lblFirstAccel.Font      = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
+            this.lblFirstAccel.ForeColor = System.Drawing.Color.Yellow;
+            this.lblFirstAccel.BackColor = System.Drawing.Color.Transparent;
+            this.lblFirstAccel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblFirstAccel.Location  = new System.Drawing.Point(480, 368);
+            this.lblFirstAccel.Text      = "";
+
             // ── Bouton GO (reset) ──────────────────────────────────────────────
             this.btnGo.Font      = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.btnGo.Location  = new System.Drawing.Point(480, 370);
+            this.btnGo.Location  = new System.Drawing.Point(480, 400);
             this.btnGo.Size      = new System.Drawing.Size(160, 45);
             this.btnGo.Text      = "🔄 RESET";
             this.btnGo.BackColor = System.Drawing.Color.FromArgb(180, 0, 0);
@@ -81,10 +95,40 @@ namespace Racing.forms
             this.btnGo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGo.Click    += new System.EventHandler(this.btnGo_Click);
 
+            // ── Bouton START Chrono ────────────────────────────────────────────
+            this.btnChronoStart.Font      = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnChronoStart.Location  = new System.Drawing.Point(480, 330);
+            this.btnChronoStart.Size      = new System.Drawing.Size(50, 30);
+            this.btnChronoStart.Text      = "Start";
+            this.btnChronoStart.BackColor = System.Drawing.Color.FromArgb(0, 120, 0);
+            this.btnChronoStart.ForeColor = System.Drawing.Color.White;
+            this.btnChronoStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnChronoStart.Click    += new System.EventHandler(this.btnChronoStart_Click);
+
+            // ── Bouton STOP Chrono ─────────────────────────────────────────────
+            this.btnChronoStop.Font      = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnChronoStop.Location  = new System.Drawing.Point(535, 330);
+            this.btnChronoStop.Size      = new System.Drawing.Size(50, 30);
+            this.btnChronoStop.Text      = "Stop";
+            this.btnChronoStop.BackColor = System.Drawing.Color.FromArgb(180, 0, 0);
+            this.btnChronoStop.ForeColor = System.Drawing.Color.White;
+            this.btnChronoStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnChronoStop.Click    += new System.EventHandler(this.btnChronoStop_Click);
+
+            // ── Bouton RESTART Chrono ──────────────────────────────────────────
+            this.btnChronoRestart.Font      = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnChronoRestart.Location  = new System.Drawing.Point(590, 330);
+            this.btnChronoRestart.Size      = new System.Drawing.Size(60, 30);
+            this.btnChronoRestart.Text      = "Restart";
+            this.btnChronoRestart.BackColor = System.Drawing.Color.FromArgb(120, 120, 0);
+            this.btnChronoRestart.ForeColor = System.Drawing.Color.White;
+            this.btnChronoRestart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnChronoRestart.Click    += new System.EventHandler(this.btnChronoRestart_Click);
+
             // ── SimulationForm ─────────────────────────────────────────────────
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode       = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize          = new System.Drawing.Size(800, 460);
+            this.ClientSize          = new System.Drawing.Size(800, 490);
             this.FormBorderStyle     = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox         = false;
             this.Text                = "Simulation";
@@ -97,6 +141,10 @@ namespace Racing.forms
             this.Controls.Add(this.lblSpeedValue);
             this.Controls.Add(this.lblChronoTitle);
             this.Controls.Add(this.lblChrono);
+            this.Controls.Add(this.lblFirstAccel);  // 🎯 Ajouter le label
+            this.Controls.Add(this.btnChronoStart);
+            this.Controls.Add(this.btnChronoStop);
+            this.Controls.Add(this.btnChronoRestart);
             this.Controls.Add(this.btnGo);
 
             this.ResumeLayout(false);
@@ -110,6 +158,10 @@ namespace Racing.forms
         private System.Windows.Forms.Label  lblChronoTitle;
         private System.Windows.Forms.Label  lblSpeedValue;
         private System.Windows.Forms.Label  lblCarName;
+        private System.Windows.Forms.Label  lblFirstAccel;  // 🎯 Nouveau
         private System.Windows.Forms.Button btnGo;
+        private System.Windows.Forms.Button btnChronoStart;
+        private System.Windows.Forms.Button btnChronoStop;
+        private System.Windows.Forms.Button btnChronoRestart;
     }
 }

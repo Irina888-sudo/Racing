@@ -13,6 +13,8 @@ namespace Racing.forms
         private float _carX        = 20;
         private bool _spaceHeld    = false;
         private bool _raceStarted  = false;
+        private bool _raceFinished = false;
+        private bool _firstSpacePressed = false;  // 🎯 Track le premier SPACE
         private int _tickCount     = 0;
         private DateTime _spaceHoldStartTime;
 
@@ -33,6 +35,7 @@ namespace Racing.forms
 
         private void SimulationForm_Load(object sender, EventArgs e)
         {
+            lblChrono.Text = "-00:00:05";
             _timer.Start();
         }
 
@@ -51,6 +54,13 @@ namespace Racing.forms
                     _spaceHeld = true;
                     _spaceHoldStartTime = DateTime.Now;
                     _raceStarted = true;
+                    
+                    // 🎯 Enregistre le 1er SPACE (1ère accélération)
+                    if (!_firstSpacePressed)
+                    {
+                        _firstSpacePressed = true;
+                        _simService.RecordFirstAcceleration();
+                    }
                 }
                 e.SuppressKeyPress = true;
             }
@@ -71,27 +81,33 @@ namespace Racing.forms
 
         private void OnTick(object? sender, EventArgs e)
         {
-            if (!_raceStarted) return;
-
+            // 🔄 Le chronomètre se met TOUJOURS à jour, indépendamment de la voiture
             _simService.Tick();
+            lblChrono.Text = _simService.ElapsedTime.ToString(@"hh\:mm\:ss");
+
+    if (!_raceStarted) return;
+
+            if (!_raceStarted) return;
 
             _carX += (float)(_simService.CurrentSpeed / 5f);
 
-            if (_carX >= pnlRoute.Width - 60)
+            // 🏁 Si la voiture atteint la finish
+            if (_carX >= pnlRoute.Width - 60 && !_raceFinished)
             {
-                // Sauvegarde avant de terminer (avant que CurrentSpeed soit reset)
-                string saveFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data", "save.txt");
-                _simService.SaveResult(lblCarName.Text, saveFilePath);
-
-                _simService.Finish();
-                _raceStarted = false;
-                _carX        = pnlRoute.Width - 60;
-
-                MessageBox.Show("Course terminée ! Résultat sauvegardé dans save.txt");
+                _raceFinished = true;  // ✅ Marque que la course est finie
+                _carX = pnlRoute.Width - 60;
+                // ⚠️ Ne sauvegarde PAS ici - attendre le STOP du chrono
+                // ⚠️ Ne termine PAS la simulation ici - attendre le STOP du chrono
             }
 
             lblSpeedValue.Text = $"{(int)_simService.CurrentSpeed} km/h";
             lblChrono.Text     = _simService.ElapsedTime.ToString(@"hh\:mm\:ss");
+            
+            // 🎯 Affiche le temps de 1ère accélération
+            if (_simService.FirstAccelerationTime.HasValue)
+            {
+                lblFirstAccel.Text = $"1ère accélération à: {_simService.FirstAccelerationTime:hh\\:mm\\:ss}";
+            }
 
             pnlRoute.Invalidate();
             pnlSpeedo.Invalidate();
@@ -103,13 +119,46 @@ namespace Racing.forms
             _carX        = 20;
             _spaceHeld   = false;
             _raceStarted = false;
+            _raceFinished = false;
+            _firstSpacePressed = false;  // 🔄 Réinitialise aussi le flag 1er SPACE
             _tickCount   = 0;
 
             lblSpeedValue.Text = "0 km/h";
-            lblChrono.Text     = "00:00:00";
+            lblChrono.Text     = "-00:00:05";
+            lblFirstAccel.Text = "";  // 🎯 Vide aussi l'affichage 1ère accélération
 
             pnlRoute.Invalidate();
             pnlSpeedo.Invalidate();
+        }
+
+        private void btnChronoStart_Click(object sender, EventArgs e)
+        {
+            _simService.StartChrono();
+            // ✅ L'affichage se met à jour à la prochaine frame OnTick
+        }
+
+        private void btnChronoStop_Click(object sender, EventArgs e)
+        {
+            _simService.StopChrono();
+            
+            // 💾 Si la course est finie, sauvegarder le résultat
+            if (_raceFinished)
+            {
+                string saveFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data", "save.txt");
+                _simService.SaveResult(lblCarName.Text, saveFilePath);
+                
+                _simService.Finish();  // 🏁 Termine vraiment la simulation
+                _raceStarted = false;
+                
+                MessageBox.Show("Course terminée ! Résultat sauvegardé dans save.txt");
+            }
+            // L'affichage reste sur la dernière valeur du chrono
+        }
+
+        private void btnChronoRestart_Click(object sender, EventArgs e)
+        {
+            _simService.RestartChrono();
+            lblChrono.Text = "-00:00:05";  // 🔄 Affiche immédiatement -5
         }
 
         private void pnlRoute_Paint(object? sender, PaintEventArgs e)
@@ -138,7 +187,7 @@ namespace Racing.forms
             g.FillEllipse(Brushes.Black,   _carX + 5,  carY + 18, 14, 14);
             g.FillEllipse(Brushes.Black,   _carX + 40, carY + 18, 14, 14);
 
-            if (_simService.IsFinished)
+            if (_raceFinished)  // 🏁 Affiche FINISH dès que la voiture atteint la finish
             {
                 g.DrawString("FINISH !", new Font("Segoe UI", 18F, FontStyle.Bold),
                     Brushes.Red, new PointF(w / 2 - 70, h / 2 - 20));

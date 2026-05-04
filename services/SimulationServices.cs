@@ -9,13 +9,17 @@ namespace Racing.services
         private int _tickCount = 0;
 
         public double CurrentSpeed  { get; private set; } = 0;
-        public TimeSpan ElapsedTime { get; private set; } = TimeSpan.Zero;
+        public TimeSpan ElapsedTime { get; private set; } = TimeSpan.FromSeconds(-5);
+        public TimeSpan? FirstAccelerationTime { get; private set; } = null;  // 🎯 Temps du 1er SPACE
         public bool IsFinished      { get; private set; } = false;
 
         public double MaxSpeed => _car.MaxSpeed;
 
-        private bool _chronoStarted = false;
+        // Chrono manuel
+        private bool _chronoRunning = false;
         private DateTime _chronoStart;
+        private TimeSpan _chronoOffset = TimeSpan.FromSeconds(-5);
+        private TimeSpan _lastSavedTime = TimeSpan.FromSeconds(-5);  // 💾 Sauvegarde lors du STOP
 
         public SimulationService(Car car)
         {
@@ -28,20 +32,56 @@ namespace Racing.services
     
             _tickCount++;
 
-            // Chrono démarre dès vitesse > 0
-            if (CurrentSpeed > 0 && !_chronoStarted)
+            // Mise à jour du chronomètre s'il est en cours
+            if (_chronoRunning)
             {
-                _chronoStarted = true;
-                _chronoStart   = DateTime.Now;
+                ElapsedTime = DateTime.Now - _chronoStart + _chronoOffset;
             }
-
-            if (_chronoStarted)
-                ElapsedTime = DateTime.Now - _chronoStart;
         }
 
         /// <summary>
-        /// Applique une augmentation de vitesse basée sur la durée du maintien du spacebar
+        /// Démarre le chronomètre (reprend depuis la dernière valeur sauvegardée)
         /// </summary>
+        public void StartChrono()
+        {
+            if (!_chronoRunning)
+            {
+                _chronoRunning = true;
+                _chronoStart = DateTime.Now;
+                _chronoOffset = _lastSavedTime;  // 📌 Reprend depuis la valeur sauvegardée
+            }
+        }
+
+        /// <summary>
+        /// Arrête le chronomètre (sauvegarde la valeur actuelle)
+        /// </summary>
+        public void StopChrono()
+        {
+            _chronoRunning = false;
+            _lastSavedTime = ElapsedTime;  // 💾 Sauvegarde la valeur avant d'arrêter
+        }
+
+        /// <summary>
+        /// Redémarre le chronomètre à -5 secondes (réinitialise tout)
+        /// </summary>
+        public void RestartChrono()
+        {
+            _chronoRunning = false;
+            ElapsedTime = TimeSpan.FromSeconds(-5);
+            _chronoOffset = TimeSpan.FromSeconds(-5);
+            _lastSavedTime = TimeSpan.FromSeconds(-5);  // 🔄 Réinitialise la valeur sauvegardée
+        }
+
+        /// <summary>
+        /// Enregistre le temps du premier appui sur SPACE
+        /// </summary>
+        public void RecordFirstAcceleration()
+        {
+            if (FirstAccelerationTime == null)  // 🎯 Enregistre SEULEMENT si c'est le 1er
+            {
+                FirstAccelerationTime = ElapsedTime;
+            }
+        }
         public void ApplyAcceleration(double secondsHeld)
         {
             if (IsFinished) return;
@@ -71,11 +111,15 @@ namespace Racing.services
                 // Conversion km/h → m/s (1 km/h = 1/3.6 m/s)
                 double speedInMs = CurrentSpeed / 3.6;
                 int finalSpeed = (int)speedInMs;
-                string line = $"{carName} | {timeFormatted} | {finalSpeed} m/s";
+                
+                // 🎯 Temps de première accélération
+                string firstAccelTime = FirstAccelerationTime?.ToString(@"hh\:mm\:ss") ?? "N/A";
+                
+                string line = $"{carName} | {timeFormatted} | {finalSpeed} m/s | {firstAccelTime}";
 
                 
-                string directory = Path.GetDirectoryName(filePath);
-                if (!Directory.Exists(directory))
+                string? directory = Path.GetDirectoryName(filePath);
+                if (directory != null && !Directory.Exists(directory))
                     Directory.CreateDirectory(directory);
 
                 
@@ -90,8 +134,11 @@ namespace Racing.services
         public void Reset()
         {
             CurrentSpeed   = 0;
-            ElapsedTime    = TimeSpan.Zero;
-            _chronoStarted = false;
+            ElapsedTime    = TimeSpan.FromSeconds(-5);
+            FirstAccelerationTime = null;  // 🔄 Réinitialise le temps 1ère accélération
+            _chronoRunning = false;
+            _chronoOffset  = TimeSpan.FromSeconds(-5);
+            _lastSavedTime = TimeSpan.FromSeconds(-5);
             IsFinished     = false;
         }
     }
