@@ -79,9 +79,15 @@ namespace Racing.forms
 
             if (_carX >= pnlRoute.Width - 60)
             {
+                // Sauvegarde avant de terminer (avant que CurrentSpeed soit reset)
+                string saveFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data", "save.txt");
+                _simService.SaveResult(lblCarName.Text, saveFilePath);
+
                 _simService.Finish();
                 _raceStarted = false;
                 _carX        = pnlRoute.Width - 60;
+
+                MessageBox.Show("Course terminée ! Résultat sauvegardé dans save.txt");
             }
 
             lblSpeedValue.Text = $"{(int)_simService.CurrentSpeed} km/h";

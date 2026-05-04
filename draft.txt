@@ -38,4 +38,9 @@ MainForm.cs : Comportement
 MainForm.Designer.cs : Apparence Le plan de la salle (tables, chaises, disposition)
 Program.cs : Démarrage Le gérant qui ouvre la porte le matin.
 
+Ajouter une méthode SaveResult dans SimulationService
+L'appeler dans SimulationForm quand la course finit (avant Finish())
+Afficher une confirmation
 
+
+#Si vous avez des questions vus pouvez me les posez

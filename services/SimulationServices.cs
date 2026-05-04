@@ -63,6 +63,30 @@ namespace Racing.services
             CurrentSpeed = 0;
         }
 
+        public void SaveResult(string carName, string filePath)
+        {
+            try
+            {
+                string timeFormatted = ElapsedTime.ToString(@"hh\:mm\:ss");
+                // Conversion km/h → m/s (1 km/h = 1/3.6 m/s)
+                double speedInMs = CurrentSpeed / 3.6;
+                int finalSpeed = (int)speedInMs;
+                string line = $"{carName} | {timeFormatted} | {finalSpeed} m/s";
+
+                
+                string directory = Path.GetDirectoryName(filePath);
+                if (!Directory.Exists(directory))
+                    Directory.CreateDirectory(directory);
+
+                
+                System.IO.File.AppendAllText(filePath, line + Environment.NewLine);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors de la sauvegarde : {ex.Message}");
+            }
+        }
+
         public void Reset()
         {
             CurrentSpeed   = 0;
