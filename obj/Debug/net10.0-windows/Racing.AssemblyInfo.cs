@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Racing")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7542d1ff39329a8e38d082a9dc5d4bde9d1800ba")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7a21c150a631d3d8c6cfd57a4ea305d84c5a270e")]
 [assembly: System.Reflection.AssemblyProductAttribute("Racing")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Racing")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -36,7 +36,7 @@ namespace Racing.forms
             if (car != null)
             {
                 ShowCarDetails(car);
-                btnStart.Enabled = true; // active le bouton dès qu'une voiture est sélectionnée
+                btnStart.Enabled = true; 
             }
         }
 
@@ -50,7 +50,6 @@ namespace Racing.forms
             Car? car = _carServices.GetCarByNom(nom);
             if (car == null) return;
 
-            // Ouvre la fenêtre de simulation en passant la voiture sélectionnée
             SimulationForm simForm = new SimulationForm(car);
             simForm.Show();
         }

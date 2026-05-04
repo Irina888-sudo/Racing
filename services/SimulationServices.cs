@@ -39,32 +39,23 @@ namespace Racing.services
             }
         }
 
-        /// <summary>
-        /// Démarre le chronomètre (reprend depuis la dernière valeur sauvegardée)
-        /// </summary>
-        public void StartChrono()
+                public void StartChrono()
         {
             if (!_chronoRunning)
             {
                 _chronoRunning = true;
                 _chronoStart = DateTime.Now;
-                _chronoOffset = _lastSavedTime;  // 📌 Reprend depuis la valeur sauvegardée
+                _chronoOffset = _lastSavedTime;  
             }
         }
 
-        /// <summary>
-        /// Arrête le chronomètre (sauvegarde la valeur actuelle)
-        /// </summary>
-        public void StopChrono()
+            public void StopChrono()
         {
             _chronoRunning = false;
             _lastSavedTime = ElapsedTime;  // 💾 Sauvegarde la valeur avant d'arrêter
         }
 
-        /// <summary>
-        /// Redémarre le chronomètre à -5 secondes (réinitialise tout)
-        /// </summary>
-        public void RestartChrono()
+               public void RestartChrono()
         {
             _chronoRunning = false;
             ElapsedTime = TimeSpan.FromSeconds(-5);
@@ -72,9 +63,7 @@ namespace Racing.services
             _lastSavedTime = TimeSpan.FromSeconds(-5);  // 🔄 Réinitialise la valeur sauvegardée
         }
 
-        /// <summary>
-        /// Enregistre le temps du premier appui sur SPACE
-        /// </summary>
+       
         public void RecordFirstAcceleration()
         {
             if (FirstAccelerationTime == null)  // 🎯 Enregistre SEULEMENT si c'est le 1er

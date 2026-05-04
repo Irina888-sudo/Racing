@@ -53,9 +53,8 @@ Et le chrono commence par -5 pas 0.
 #mais avant tout ca si vous avez des questions vous pouvez me les pose
 
 
-C'est un projet et je veux juste debugger quelque chose .
-je veux enregistrer la premiere coup de "espace" de la voiture c'est a dire la premiere acceleration
-Je veux enregistrer a quelle seconde la voiture a ete accélèrer pour la premiere fois
-Donc le chrono doit marcher quand on clique sur start meme si la voiture ne demarre pas encore 
 mais avant tout ca si vous avez des questions vous pouvez me les pose, u si vous avez besoin de fichiers vous
  pouvezme demander
+
+
+ca marche , mais jaimerai comprendre tous les logiques du code depuis le debut jusqu a la fin, sois court utiliser des schemas.txt.
