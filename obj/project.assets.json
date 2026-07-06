@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Racing\\Racing\\Racing.csproj",
+      "projectUniqueName": "C:\\Users\\Mihaja\\Documents\\GitHub\\Racing\\Racing.csproj",
       "projectName": "Racing",
-      "projectPath": "D:\\Racing\\Racing\\Racing.csproj",
+      "projectPath": "C:\\Users\\Mihaja\\Documents\\GitHub\\Racing\\Racing.csproj",
       "packagesPath": "C:\\Users\\Mihaja\\.nuget\\packages\\",
-      "outputPath": "D:\\Racing\\Racing\\obj\\",
+      "outputPath": "C:\\Users\\Mihaja\\Documents\\GitHub\\Racing\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

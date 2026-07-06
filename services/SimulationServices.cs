@@ -32,7 +32,7 @@ namespace Racing.services
     
             _tickCount++;
 
-            // Mise à jour du chronomètre s'il est en cours
+            
             if (_chronoRunning)
             {
                 ElapsedTime = DateTime.Now - _chronoStart + _chronoOffset;
@@ -52,7 +52,7 @@ namespace Racing.services
             public void StopChrono()
         {
             _chronoRunning = false;
-            _lastSavedTime = ElapsedTime;  // 💾 Sauvegarde la valeur avant d'arrêter
+            _lastSavedTime = ElapsedTime; 
         }
 
                public void RestartChrono()
